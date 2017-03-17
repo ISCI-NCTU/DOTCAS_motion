@@ -151,18 +151,17 @@ include_directories(include
 # add_dependencies(tm700_test ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Declare a C++ executable
- add_executable(tm700_test
-   src/tm700_test.cpp
- )
+add_executable(tm700_test src/tm700_test.cpp)
+add_executable(tm700_debug src/tm700_debug.cpp)
 
 ## Add cmake target dependencies of the executable
 ## same as for the library above
- add_dependencies(tm700_test ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+add_dependencies(tm700_test ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+add_dependencies(tm700_debug ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
- target_link_libraries(tm700_test
-   ${catkin_LIBRARIES}
- )
+target_link_libraries(tm700_test ${catkin_LIBRARIES})
+target_link_libraries(tm700_debug ${catkin_LIBRARIES})
 
 #############
 ## Install ##
