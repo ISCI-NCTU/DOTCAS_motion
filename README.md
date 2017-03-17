@@ -5,7 +5,7 @@ A collision avoidance and motion planning system provides ROS support for techma
 
 - **Maintainer: [Howard Chen](https://github.com/s880367)**
 
-- Environment: ubuntu14.04 ROS indigo
+- Environment: ubuntu14.04 ROS indigo, **MoveIt 0.7.6**
 
 
 ## Overview

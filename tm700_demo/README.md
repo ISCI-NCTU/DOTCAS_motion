@@ -1,4 +1,4 @@
-#tm700_demo
+# tm700_demo
 a simple test move using TM5_700 robot
 
 ## Overview
