@@ -3,7 +3,6 @@
   
   <xacro:include filename="$(find tm_description)/urdf/tm.transmission.xacro" />
   <xacro:include filename="$(find tm_description)/urdf/tm.gazebo.xacro" />
-  
   <property name="pi" value="3.14159265" />
 
   <!-- Mass parameters-->
