@@ -61,9 +61,5 @@ roslaunch tm_gazebo tm700.launch
 ```
 roslaunch tm_gazebo tm700_gazebo_moveit.launch
 ```
-Control the robot in real world or Gazebo
-```
-rosrun tm700_test tm700_test
-```
 **- Snapshot :**
 ![](https://i.imgur.com/Qg7QBLz.png)
