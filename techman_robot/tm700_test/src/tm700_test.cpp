@@ -78,12 +78,13 @@ bool try_move_to_joint_target(moveit::planning_interface::MoveGroup& group,
                               unsigned int max_try_times = 1
                              )
 {
-    if (!ros::ok()) return false;
+    if (!ros::ok()) 
+        return false;
+    
     bool success = false;
 
     for (unsigned int i = 0; i < max_try_times; i++)
     {
-
         group.setJointValueTarget(joint_target);
 
         if (group.move())
