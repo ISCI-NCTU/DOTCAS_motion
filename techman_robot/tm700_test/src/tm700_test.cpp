@@ -19,6 +19,7 @@
 
 #include <ros/ros.h>
 #include <ros/console.h>
+#include "std_msgs/Int32.h"
 
 #include <moveit/move_group_interface/move_group.h>
 #include <moveit/planning_scene_interface/planning_scene_interface.h>
@@ -42,7 +43,7 @@
 //#include "tm_msgs/SetIORequest.h"
 //#include "tm_msgs/SetIOResponse.h"
 
-
+int stopstate = 0;
 
 bool try_move_to_named_target(moveit::planning_interface::MoveGroup& group,
                               moveit::planning_interface::MoveGroup::Plan& plan,
@@ -65,8 +66,14 @@ bool try_move_to_named_target(moveit::planning_interface::MoveGroup& group,
         }
         else
         {
-            if (!ros::ok()) break;
-            sleep(1);
+            if (!ros::ok()) 
+                break;
+            //sleep(1);
+            while(ros::ok()) //stop and halt
+            {
+                if(stopstate == 0)
+                    break;
+            }
         }
     }
     return success;
@@ -90,14 +97,28 @@ bool try_move_to_joint_target(moveit::planning_interface::MoveGroup& group,
         if (group.move())
         {
             success = true;
+            ROS_INFO("move successed!!");
             break;
         }
-        else
+        else // meet stop() condition
         {
-            if (!ros::ok()) break;
-            sleep(1);
+            if (!ros::ok()) 
+                break;
+            //sleep(1);
+            while(ros::ok()) //stop and halt
+            {
+                if(stopstate == 0)
+                    break;
+            }
         }
     }
+}
+
+//Callback of the topic /numbers
+void number_callback(const std_msgs::Int32::ConstPtr& msg)
+{
+    ROS_INFO("Recieved stop state: %d and ready to shutdown!!",msg->data);
+    stopstate = msg->data;
 }
 
 int main(int argc, char **argv)
@@ -110,6 +131,8 @@ int main(int argc, char **argv)
     io_srv.request.fun = 2;//tm_msgs::SetIORequest::FUN_SET_EE_DIGITAL_OUT;
     io_srv.request.ch = 0;
     io_srv.request.value = 0.0;
+
+    ros::Subscriber number_subscriber = node_handle.subscribe("/numbers",10,number_callback);
 
     // start a background "spinner", so our node can process ROS messages
     //  - this lets us know when the move is completed
@@ -128,8 +151,8 @@ int main(int argc, char **argv)
     // class to deal directly with the world.
     moveit::planning_interface::PlanningSceneInterface planning_scene_interface;
     // (Optional) Create a publisher for visualizing plans in Rviz.
-    //ros::Publisher display_publisher = node_handle.advertise<moveit_msgs::DisplayTrajectory>("/move_group/display_planned_path", 1, true);
-    //moveit_msgs::DisplayTrajectory display_trajectory;
+    ros::Publisher display_publisher = node_handle.advertise<moveit_msgs::DisplayTrajectory>("/move_group/display_planned_path", 1, true);
+    moveit_msgs::DisplayTrajectory display_trajectory;
 
     // Getting Basic Information
     // ^^^^^^^^^^^^^^^^^^^^^^^^^
