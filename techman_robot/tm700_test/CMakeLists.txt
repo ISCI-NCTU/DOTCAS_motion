@@ -11,10 +11,11 @@ find_package(catkin REQUIRED COMPONENTS
   moveit_ros_move_group
   moveit_ros_planning_interface
 #  object_manipulation_msgs
-#  actionlib
+  actionlib
+  actionlib_msgs
 #  industrial_robot_client
 #  industrial_robot_simulator
-#  std_msgs
+  std_msgs
 #  tf_conversions
 #  message_generation
   tm_description
@@ -153,15 +154,18 @@ include_directories(include
 ## Declare a C++ executable
 add_executable(tm700_test src/tm700_test.cpp)
 add_executable(tm700_debug src/tm700_debug.cpp)
+add_executable(tm700_stop src/tm700_stop.cpp)
 
 ## Add cmake target dependencies of the executable
 ## same as for the library above
 add_dependencies(tm700_test ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 add_dependencies(tm700_debug ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+add_dependencies(tm700_stop ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
 target_link_libraries(tm700_test ${catkin_LIBRARIES})
 target_link_libraries(tm700_debug ${catkin_LIBRARIES})
+target_link_libraries(tm700_stop ${catkin_LIBRARIES})
 
 #############
 ## Install ##
